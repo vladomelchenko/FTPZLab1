@@ -7,10 +7,24 @@ namespace FTPZLab1.Models
     {
         private int sum;
         private int term;
+        private int percent;
+        public bool PercentInConstr { get; set; }
+        public int Percent
+        {
+            get => percent;
+            set
+            {
+                PercentInConstr = true;
+                if (sum >= 40000 || term >= 10)
+                {
+                    percent = value;
+                }
+            }
+        }
 
         public CreditInfo()
         {
-            Percent = 15;
+            percent = 15;
         }
         public int Sum
         {
@@ -19,11 +33,11 @@ namespace FTPZLab1.Models
             {
                 if (value >= 10000 && value < 20000)
                 {
-                    Percent -= 1;
+                    percent -= 1;
                 }
                 else if (value >= 20000 && value < 40000)
                 {
-                    Percent -= 2;
+                    percent -= 2;
                 }
                 sum = value;
             }
@@ -35,22 +49,26 @@ namespace FTPZLab1.Models
             {
                 if (value >= 3 && value < 5)
                 {
-                    Percent += 1;
+                    percent += 1;
                 }
                 else if (value >= 5 && value < 10)
                 {
-                    Percent += 2;
+                    percent += 2;
                 }
                 term = value;
             }
         }
-        public int Percent { get; private set; }
 
         public double CalculateOverpayments()
         {
             const int forPercent = 100;
             double result = Term * Sum * Percent / forPercent;
             return result;
+        }
+
+        public override string ToString()
+        {
+            return "Sum = "+sum+"\nTerm = "+term+"\nPercent = "+percent+"\nOverpayments = "+Convert.ToString(CalculateOverpayments());
         }
     }
 }

@@ -1,23 +1,26 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using FTPZLab1.Models;
 namespace FTPZLab1
 {
     static class Tests
     {
-        public static bool Test(int Sum,int Term)
+        public static bool Test(int sum,int term,int? percent)
         {
             CreditInfo creditInfo = new CreditInfo();
-            creditInfo.Sum = Sum;
-            creditInfo.Term = Term;
+            creditInfo.Sum = sum;
+            creditInfo.Term = term;
+            if ((sum >= 40000 & percent != null) || (term >= 10 && percent != null))
+            {
+                creditInfo.Percent = (int) percent;
+            }
             Validator validator=new Validator();
+            
             if (!validator.Validate(creditInfo))
             {
+                Console.WriteLine(validator.ErrorsToStr());
                 return false;
             }
+            Console.WriteLine(creditInfo.ToString());
             return true;
 
         }
